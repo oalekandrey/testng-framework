@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name = "Suite_01">
+
+    <test name = "UI_Tests">
+        <classes>
+            <class name = "tests.TestPageTest"/>
+<!--            <class name = "package.className02"/> -->
+<!--            <class name = "package.className03"/> -->
+        </classes>
+    </test>
+
+    <test name = "API_Tests">
+        <classes>
+<!--            <class name = "package.className01"/> -->
+<!--            <class name = "package.className02"/> -->
+<!--            <class name = "package.className03"/> -->
+        </classes>
+    </test>
+</suite>
