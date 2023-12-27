@@ -1,14 +1,17 @@
 package utilities;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -217,5 +220,71 @@ public class SeleniumUtils {
         }
         return arr;
     }
+
+    public static Object[][] readFromExcelSheet_XLS(String pathToFile, String workSheetName)  {
+        HSSFWorkbook workbook = new HSSFWorkbook();
+
+        try(FileInputStream fis = new FileInputStream(pathToFile);  ) {
+            workbook = new HSSFWorkbook(fis);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        HSSFSheet workSheet = workbook.getSheet(workSheetName);
+        int noOfRows = workSheet.getLastRowNum() + 1;
+        int noOfColumns = workSheet.getRow(0).getLastCellNum();
+        Object[][] dataTable = new String[noOfRows][noOfColumns];
+
+        for (int i = workSheet.getFirstRowNum(); i < workSheet.getLastRowNum() + 1; i++) {
+            Row row = workSheet.getRow(i);
+            for (int j = row.getFirstCellNum(); j < row.getLastCellNum(); j++) {
+                Cell cell = row.getCell(j);
+                dataTable[i][j] = cell.getStringCellValue();
+            }
+        }
+
+        try {
+            workbook.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return dataTable;
+    }
+
+
+    public static Object[][] readFromExcelSheet_XLSX(String pathToFile, String workSheetName) {
+        XSSFWorkbook workbook = new XSSFWorkbook();
+
+        try(FileInputStream fis = new FileInputStream(pathToFile)){
+            workbook = new XSSFWorkbook(fis);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        XSSFSheet workSheet = workbook.getSheet(workSheetName);
+        int noOfRows = workSheet.getLastRowNum() + 1;
+        int noOfColumns = workSheet.getRow(0).getLastCellNum();
+        Object[][] dataTable = new String[noOfRows][noOfColumns];
+
+        for (int i = workSheet.getFirstRowNum(); i < workSheet.getLastRowNum() + 1; i++) {
+            Row row = workSheet.getRow(i);
+            for (int j = row.getFirstCellNum(); j < row.getLastCellNum(); j++) {
+                Cell cell = row.getCell(j);
+                dataTable[i][j] = cell.getStringCellValue();
+            }
+        }
+
+        try {
+            workbook.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return dataTable;
+    }
+
+
+
 
 }
