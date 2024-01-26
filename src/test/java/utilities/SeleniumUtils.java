@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -239,7 +240,7 @@ public class SeleniumUtils {
             Row row = workSheet.getRow(i);
             for (int j = row.getFirstCellNum(); j < row.getLastCellNum(); j++) {
                 Cell cell = row.getCell(j);
-                dataTable[i][j] = cell.getStringCellValue();
+                dataTable[i][j] = new DataFormatter().formatCellValue(cell);
             }
         }
 
@@ -271,7 +272,7 @@ public class SeleniumUtils {
             Row row = workSheet.getRow(i);
             for (int j = row.getFirstCellNum(); j < row.getLastCellNum(); j++) {
                 Cell cell = row.getCell(j);
-                dataTable[i][j] = cell.getStringCellValue();
+                dataTable[i][j] = new DataFormatter().formatCellValue(cell);
             }
         }
 
